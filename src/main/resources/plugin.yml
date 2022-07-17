@@ -1,0 +1,11 @@
+name: BattleBets
+version: '${project.version}'
+main: me.bananababoo.battlebets.BattleBets
+api-version: 1.18
+authors: [ Bananababoo ]
+description: BattleBets Plugin for DougdougServerserver
+depend: [CMI]
+commands:
+  Battle:
+    description: Battlebets commands
+    usage: <command>

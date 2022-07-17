@@ -1,0 +1,4 @@
+todo:
+finish scoreboard with added teams, and make it look pretty
+make potion effect a added thing to a arena
+fix whatever the issue is with the colors and death not working
