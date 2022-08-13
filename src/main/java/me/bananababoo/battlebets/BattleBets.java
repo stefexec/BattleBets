@@ -29,6 +29,15 @@ public final class BattleBets extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        // new stuff
+
+        getLogger().info("#############################");
+        getLogger().info("BattleBets 1.3.2 started!");
+        getLogger().info("#############################");
+
+
+        // ##################################################################
+
         RegisteredServiceProvider<LuckPerms> lpprovider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (lpprovider != null) {
             LPapi = lpprovider.getProvider();
@@ -48,6 +57,7 @@ public final class BattleBets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
         getServer().getPluginManager().registerEvents(new OnDeath(), this);
         getServer().getPluginManager().registerEvents(new OnMove(), this);
+
 
 
     }

@@ -81,7 +81,7 @@
             <artifactId>CMI</artifactId>
             <version>9.0.0</version>
             <scope>system</scope>
-            <systemPath>/home/fam/Desktop/BattleBets/otherstuff/CMI9.0.0.0API.jar</systemPath>
+            <systemPath>C:/Users/stefa/Coding/Java/BattleBets/src/main/resources/CMI9.0.0.0API.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
