@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class StorageUtil {
-    static List<Arena> list = new ArrayList<>();
+    static List<Arena> list = new ArrayList<>(); // list of all loaded arenas
     static Arena arena;
 
 
@@ -49,7 +49,7 @@ public class StorageUtil {
             if(a.getName().equals(arena.getName()) && a.getTeam().equals(arena.getTeam())){
 
                 list.set(i, arena);
-                Bukkit.getLogger().info("saved arena "+ arena.toString());
+                Bukkit.getLogger().info("saved arena "+ arena);
             }
             i++;
         }
@@ -69,19 +69,18 @@ public class StorageUtil {
     public static Arena getArena(String arena, String team) {
         Gson gson = new Gson();
         File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Arenas.json");
-        Reader reader = null;
         try {
-            reader = Files.newBufferedReader(file.toPath());
+            Reader reader = Files.newBufferedReader(file.toPath());
+            Type typeOf = new TypeToken<List<Arena>>() {}.getType();
+            list = gson.fromJson(reader, typeOf);
+            Bukkit.getLogger().info(list.toString());
+            for (Arena a : list) {
+                if (a.getName().equals(arena) && a.getTeam().equalsIgnoreCase(team)) {
+                    return a;
+                }
+            }
         } catch (IOException e) {
             Extra.warn(e);
-        }
-        Type typeOf = new TypeToken<List<Arena>>() {}.getType();
-        list = gson.fromJson(reader, typeOf);
-        Bukkit.getLogger().info(list.toString());
-        for (Arena a : list) {
-            if (a.getName().equals(arena) && a.getTeam().equalsIgnoreCase(team)) {
-                return a;
-            }
         }
         return null;
     }
@@ -117,6 +116,7 @@ public class StorageUtil {
         return false;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void saveFile(){
         Bukkit.getLogger().info("0");
         Gson gson = new Gson();
