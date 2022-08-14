@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class Kits {
     public static void giveKit(String redKit, String blueKit) {
@@ -22,22 +24,28 @@ public class Kits {
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if(TeamM.Team(p).equals("red")){
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + p.getName());
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit RedArmour " + p.getName());
 
-                // particles
+                // give MM items
+                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
+                for (int i = 0; i < redItems.size(); i++) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
+                }
+                
+                // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 2));
             }
             else if (TeamM.Team(p).equals("blue")){
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + p.getName());
 
-                // BEEF TEST
-                p.getInventory().addItem(new ItemStack(Material.COOKED_BEEF));
+                // give armour with cmi bc its easy
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit BlueArmour " + p.getName());
 
-                // create new .yml to store kit data
-                // IDK if it is even needed if we use CMI for items
-                // FileConfiguration bb_kits = YamlConfiguration.loadConfiguration(new File(BattleBets.getDataFolder(), "bb_kits.yml"));
+                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
+                for (int i = 0; i < redItems.size(); i++) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
+                }
 
-                // ill just add some particles for now lol
+                // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(0, 0, 255), 2));
             }
         }
