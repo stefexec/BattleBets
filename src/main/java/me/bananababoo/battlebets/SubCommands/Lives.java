@@ -6,37 +6,38 @@ import me.bananababoo.battlebets.TeamM;
 import me.bananababoo.battlebets.Utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashMap;
 
 public class Lives {
     public static int redLives;
     public static int blueLives;
-    public static HashMap<Player, Integer> livesList= new HashMap<>();
+    //public static HashMap<Player, Integer> livesList= new HashMap<>();
 
     public static void Init(Arena red, Arena blue){
         initLives(red);
         initLives(blue);
         for(Player p : Bukkit.getOnlinePlayers()){
             if(TeamM.Team(p).equals("red")){
-                livesList.put(p,redLives);
+                redLives = 0;
             }else if(TeamM.Team(p).equals("blue")) {
-                livesList.put(p,redLives);
+                blueLives = 0;
             }
         }
     }
     public static void Init(){
         for(Player p : Bukkit.getOnlinePlayers()){
             if(TeamM.Team(p).equals("red")){
-                livesList.put(p,redLives);
+                redLives = 0;
             }else if(TeamM.Team(p).equals("blue")) {
-                livesList.put(p,redLives);
+                blueLives = 0;
             }
         }
     }
-    public static void unInit(){
-        livesList.clear();
-    }
+//    public static void unInit(){
+//        livesList.clear();
+//    }
 
     public static void setMaxLives(int Lives, Arena a ){
         Arena arena = new Arena(a.getName(), a.getTeam(), a.getX(), a.getY(), a.getZ(), Lives);
@@ -60,17 +61,26 @@ public class Lives {
         Arena red = StorageUtil.getArena(arenaName, "red");
         Arena blue = StorageUtil.getArena(arenaName, "blue");
         redLives = red.getLives();
-        blueLives = red.getLives();
+        blueLives = blue.getLives();
         Scoreboard.updateScoreBoard();
     }
 
-    public static void removeLives(Player p){
-        livesList.computeIfPresent(p, (k,v) -> v - 1);
+    public static void removeLives(String team){
+        if(team.equals("red")){
+            redLives -= 1;
+        }else if(team.equals("blue")){
+            blueLives -= 1;
+        }
         Scoreboard.updateScoreBoard();
 
     }
-    public static int getLivesFromPlayer(Player p){
-        return livesList.get(p);
+    public static int getLivesFromTeam(String team){
+        if(team.equals("red")){
+            return redLives;
+        }else if(team.equals("blue")){
+            return blueLives;
+        }
+        return 0;
     }
 
     public static void resetLives(Arena a){

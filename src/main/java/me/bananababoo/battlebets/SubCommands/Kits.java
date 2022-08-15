@@ -1,18 +1,12 @@
 package me.bananababoo.battlebets.SubCommands;
 
 import me.bananababoo.battlebets.Arena;
-import me.bananababoo.battlebets.BattleBets;
 import me.bananababoo.battlebets.TeamM;
 import me.bananababoo.battlebets.Utils.StorageUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,12 +18,15 @@ public class Kits {
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if(TeamM.Team(p).equals("red")){
+
+                p.getInventory().clear();
+
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit RedArmour " + p.getName());
 
                 // give MM items
                 List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-                for (int i = 0; i < redItems.size(); i++) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
+                for (String redItem : redItems) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItem);
                 }
                 
                 // spawn particles
@@ -37,12 +34,14 @@ public class Kits {
             }
             else if (TeamM.Team(p).equals("blue")){
 
+                p.getInventory().clear();
+
                 // give armour with cmi bc its easy
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit BlueArmour " + p.getName());
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + StartStop.getArena(TeamM.Team(p)).getKit() + p.getName());
 
                 List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-                for (int i = 0; i < redItems.size(); i++) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
+                for (String redItem : redItems) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItem);
                 }
 
                 // spawn particles

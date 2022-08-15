@@ -4,13 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 public class Arena {
-    private String arenaName;
-    private String team;
+    private final String arenaName;
+    private final String team;
     private int lives;
     private int x;
     private int z;
     private int y;
-    private String kitName;
+    private String kitName = "";
     private int deathX = 0;
     private int deathY = 150;
     private int deathZ = 0;
@@ -62,6 +62,10 @@ public class Arena {
     public int getZ(){ return this.z; }
     public int getLives(){return this.lives; }
     public String getKit(){ return this.kitName;}
+
+    public void setMaxLives(int lives){
+        this.lives = lives;
+    }
 
 
 

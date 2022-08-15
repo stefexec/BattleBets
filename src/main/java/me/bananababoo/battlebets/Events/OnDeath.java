@@ -30,17 +30,17 @@ public class OnDeath implements Listener {
             if (StartStop.getMode().equals("lives")) {
                 p.getInventory().clear();
                 Arena a = StartStop.getArena();
-                Lives.removeLives(e.getPlayer());
+                Lives.removeLives(TeamM.Team(e.getPlayer()));
                 Scoreboard.updateScoreBoard();
                 Bukkit.getLogger().info(e.getPlayer() + "died and battlebets tried to increment counter");
 
-                if (Lives.getLivesFromPlayer(p) <= 0) {
+                if (Lives.getLivesFromTeam(TeamM.Team(p)) <= 0) {
                     p.setGameMode(GameMode.SPECTATOR);
-                    int aa = 0;
-                    int b = 0;
+                    int aa = 0;  // amount of people on team
+                    int b = 0;  // amount of people on team with = lives
                     for (Player ppl : TeamM.peopleOnTeam(TeamM.Team(p))) {
                         aa++;
-                        if (Lives.getLivesFromPlayer(ppl) <= 0) {
+                        if (Lives.getLivesFromTeam(TeamM.Team(ppl)) <= 0) {
                             b++;
                         }
                     }

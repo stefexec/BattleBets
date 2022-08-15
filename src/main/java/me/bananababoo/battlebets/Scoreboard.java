@@ -23,8 +23,8 @@ public class Scoreboard {
         static Score s0;
 
     private
-        static String alive = (ChatColor.GREEN + "✔" + ChatColor.RESET);
-        static String dead = (ChatColor.RED + "✖" + ChatColor.RESET);
+        static final String alive = (ChatColor.GREEN + "✔" + ChatColor.RESET);
+        static final String dead = (ChatColor.RED + "✖" + ChatColor.RESET);
 
 
     public static void startScoreboard() {
@@ -54,15 +54,15 @@ public class Scoreboard {
                 s2.resetScore();
             }catch(Exception e){
                 Bukkit.getLogger().warning(e.getMessage());
-                Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromPlayer(p));
+                Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
             }
 
             s5 = battle.getScore(ChatColor.GOLD + "Arena: " + ChatColor.WHITE + ChatColor.BOLD + StartStop.getArena().getName());
             s4 = battle.getScore(ChatColor.GOLD + "Team: " + TeamM.teamChatColor(p) + ChatColor.BOLD + Extra.capitalize(TeamM.Team(p)));
             s3 = battle.getScore(ChatColor.GOLD + "Mode: " + ChatColor.WHITE + ChatColor.BOLD + StartStop.getMode().substring(0, 1).toUpperCase() + StartStop.getMode().substring(1));
             if (StartStop.getMode().equals("lives")){
-                if (TeamM.Team(p).equals("red") || TeamM.Team(p).equals("blue")) {
-                    s2 = battle.getScore(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromPlayer(p));
+                if (TeamM.onValidTeam(p)) {
+                    s2 = battle.getScore(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
                 } else {
                     s2 = battle.getScore("");
                 }
@@ -75,7 +75,7 @@ public class Scoreboard {
                         s2.resetScore();
                     }catch(Exception e){
                         Bukkit.getLogger().warning(e.getMessage());
-                        Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromPlayer(p));
+                        Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
                     }
                     if (StartStop.isPlayerDead(ppl)) {
                         blue.append(dead).append(" ");
@@ -86,7 +86,7 @@ public class Scoreboard {
                         s1.resetScore();
                     }catch(Exception e){
                         Bukkit.getLogger().warning(e.getMessage());
-                        Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromPlayer(p));
+                        Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
                     }
                     if (StartStop.isPlayerDead(ppl)) {
                         red.append(dead).append(" ");

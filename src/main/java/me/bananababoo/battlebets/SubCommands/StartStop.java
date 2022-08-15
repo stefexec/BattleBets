@@ -27,8 +27,8 @@ public class StartStop {
     private static Arena redArena;
     private static Arena blueArena;
     private static String mode = "";
-    private static List<String> redDeathList = new ArrayList<>();
-    private static List<String> blueDeathList = new ArrayList<>();
+    private static final List<String> redDeathList = new ArrayList<>();
+    private static final List<String> blueDeathList = new ArrayList<>();
     private static Location redSpawn = new Location(Bukkit.getWorld("battlebets"), 0d,150d,0d);
     private static Location blueSpawn = new Location(Bukkit.getWorld("battlebets"), 0d,150d,0d);
     private static boolean cancle = false;
@@ -179,9 +179,11 @@ public class StartStop {
                         if(TeamM.Team(p).equals("red")){
                             redDeathList.remove(p.getName());
                             p.teleport(redSpawn);
+                            p.getInventory().clear();
                         }else if(TeamM.Team(p).equals("blue")){
                             blueDeathList.remove(p.getName());
                             p.teleport(blueSpawn);
+                            p.getInventory().clear();
                         }
                         Scoreboard.updateScoreBoard();
                         giveKit();
