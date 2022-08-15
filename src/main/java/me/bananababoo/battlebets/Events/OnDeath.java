@@ -1,22 +1,22 @@
 package me.bananababoo.battlebets.Events;
 
+import com.google.gson.Gson;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.TeamM;
 import me.bananababoo.battlebets.Utils.StorageUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class OnDeath implements Listener {
 
@@ -24,14 +24,14 @@ public class OnDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
+        Bukkit.getServer().broadcast(Component.text("SOMEONE DIED AAAAAAA " + e.getPlayer().getName()));
         Player p = e.getPlayer();
-        e.getPlayer().setHealth(Objects.requireNonNull(e.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
         if (StartStop.isBattleRunning()) {
+//            e.getPlayer().setHealth(Objects.requireNonNull(e.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
             if (StartStop.getMode().equals("lives")) {
-                p.getInventory().clear();
                 Arena a = StartStop.getArena();
                 Lives.removeLives(TeamM.Team(e.getPlayer()));
-                Scoreboard.updateScoreBoard();
+                Bukkit.getLogger().warning(e.getPlayer() + ": died points remaining for " + TeamM.Team(p) + StartStop.getArena(TeamM.Team(p)).getLives());
                 Bukkit.getLogger().info(e.getPlayer() + "died and battlebets tried to increment counter");
 
                 if (Lives.getLivesFromTeam(TeamM.Team(p)) <= 0) {
@@ -52,9 +52,11 @@ public class OnDeath implements Listener {
                         }
                     }
                 } else {
-                    StartStop.giveKit();
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getDeathX() + " " + a.getDeathY() + " " + a.getDeathZ());
+                    StartStop.giveKit(p);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getX() + " " + a.getY() + " " + a.getZ());
                 }
+                Location l = new Location(e.getPlayer().getWorld(), a.getX(), a.getY(), a.getZ());
+                e.getPlayer().teleport(l);
             } else if (StartStop.getMode().equals("rebirth")) {
                 deaths.computeIfPresent(e.getPlayer(), (k, v) -> v + 1);
                 Arena a = StartStop.getArena();

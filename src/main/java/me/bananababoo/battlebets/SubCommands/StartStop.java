@@ -18,9 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class StartStop {
     public static boolean frozen = false;
@@ -61,6 +59,7 @@ public class StartStop {
         Bukkit.getLogger().info("tried to start");
         OnDeath.resetDeathCounter();
         Lives.resetLives(redArena);
+        Lives.resetLives(blueArena);
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.getInventory().clear();
             if (TeamM.Team(p).equals("red")) {
@@ -81,13 +80,20 @@ public class StartStop {
             public void run() {
                 if (i == 0) {
                     setFrozen(true);
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        final Component mainTitle = Component.text("You are on " + TeamM.Team(p) + " Team",  TeamM.teamColor(p));
+                        final Component subtitle = Component.empty();
+                        Title title = Title.title(mainTitle, subtitle);
+                        p.showTitle(title);
+                    }
+                } else if (i == 1) {
                     final Component mainTitle = Component.text("3", NamedTextColor.RED);
                     final Component subtitle = Component.empty();
                     Title title = Title.title(mainTitle, subtitle);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.showTitle(title);
                     }
-                } else if (i == 1) {
+                } else if (i == 2) {
                     final Component mainTitle = Component.text("2", NamedTextColor.YELLOW);
                     final Component subtitle = Component.empty();
                     Title title = Title.title(mainTitle, subtitle);
@@ -95,7 +101,7 @@ public class StartStop {
                         p.showTitle(title);
                     }
 
-                } else if (i == 2) {
+                } else if (i == 3) {
                     final Component mainTitle = Component.text("1", NamedTextColor.GREEN);
                     final Component subtitle = Component.empty();
                     Title title = Title.title(mainTitle, subtitle);
@@ -103,7 +109,7 @@ public class StartStop {
                         p.showTitle(title);
 
                     }
-                } else if (i == 3) {
+                } else if (i == 4) {
                     setFrozen(false);
                     final Component mainTitle = Component.text("GO", NamedTextColor.GOLD);
                     final Component subtitle = Component.empty();
@@ -116,7 +122,7 @@ public class StartStop {
                     }
                     Kits.giveKit(redArena.getKit(), blueArena.getKit());
                 }
-                if(i < 4) { i++; }
+                if(i < 5) { i++; }
 
 
             }
@@ -126,7 +132,11 @@ public class StartStop {
 
 
     public static void giveKit(){
-            // Kits.giveKit(redArena.getKit(), blueArena.getKit());
+             Kits.giveKit(redArena.getKit(), blueArena.getKit());
+
+    }
+    public static void giveKit(Player p){
+        Kits.giveKit(redArena.getKit(), blueArena.getKit(), p);
 
     }
 
@@ -174,8 +184,6 @@ public class StartStop {
                     if(cancle){
                         cancel();
                     }
-
-
                     p.sendActionBar(Component.text("Time until revived: " + Math.round(time - i)));
                     if((time-i) <= 0){
                         if(TeamM.Team(p).equals("red")){

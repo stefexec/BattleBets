@@ -70,7 +70,7 @@ public class Arena {
 
 
     public String toString(){
-        return "arnena:" + arenaName + ",team:" + team +",x:" + x + ",y:" + y + ",z:" + z + ",lives:" + lives + ",mode:" ;
+        return "arnena:" + arenaName + ",team:" + team +",x:" + x + ",y:" + y + ",z:" + z + ",lives:" + lives + " kit:" + kitName  ;
     }
 
 }

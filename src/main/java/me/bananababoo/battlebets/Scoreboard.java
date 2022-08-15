@@ -8,7 +8,10 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.Objects;
 
@@ -50,23 +53,30 @@ public class Scoreboard {
 
     public static void updateScoreBoard(){
         for(Player p : Bukkit.getOnlinePlayers()) {
+            Bukkit.getLogger().info(p.getName() + battle.getName());
             try {
+                s1.resetScore();
                 s2.resetScore();
+                s3.resetScore();
+                s4.resetScore();
+                s2.getScoreboard().resetScores(p);
             }catch(Exception e){
                 Bukkit.getLogger().warning(e.getMessage());
                 Bukkit.getLogger().info(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
             }
 
             s5 = battle.getScore(ChatColor.GOLD + "Arena: " + ChatColor.WHITE + ChatColor.BOLD + StartStop.getArena().getName());
-            s4 = battle.getScore(ChatColor.GOLD + "Team: " + TeamM.teamChatColor(p) + ChatColor.BOLD + Extra.capitalize(TeamM.Team(p)));
-            s3 = battle.getScore(ChatColor.GOLD + "Mode: " + ChatColor.WHITE + ChatColor.BOLD + StartStop.getMode().substring(0, 1).toUpperCase() + StartStop.getMode().substring(1));
+//            s4 = battle.getScore(ChatColor.GOLD + "Team: " + TeamM.teamChatColor(p) + ChatColor.BOLD + Extra.capitalize(TeamM.Team(p)));
+            s4 = battle.getScore(ChatColor.GOLD + "Mode: " + ChatColor.WHITE + ChatColor.BOLD + StartStop.getMode().substring(0, 1).toUpperCase() + StartStop.getMode().substring(1));
             if (StartStop.getMode().equals("lives")){
-                if (TeamM.onValidTeam(p)) {
-                    s2 = battle.getScore(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
-                } else {
-                    s2 = battle.getScore("");
-                }
-                s1 = battle.getScore("");
+                s3 = battle.getScore(ChatColor.BLUE + "Blue Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam("blue"));
+                s2 = battle.getScore(ChatColor.RED + "Red Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam("red"));
+//                if (TeamM.onValidTeam(p)) {
+//                    s2 = battle.getScore(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
+//                } else {
+//                    s2 = battle.getScore("");
+//                }
+//            s1 = battle.getScore("");
             }else if(StartStop.getMode().equals("rebirth")){
                 StringBuilder red = new StringBuilder();
                 StringBuilder blue = new StringBuilder();
@@ -93,18 +103,20 @@ public class Scoreboard {
                     } else red.append(alive).append(" ");
                 }
 
-
                 s2 = battle.getScore(ChatColor.BLUE + "Blue Team: " + blue); //todo make scoreboard display info about rebirth  ✓
                 s1 = battle.getScore(ChatColor.RED + "Red Team:  " + red);
             }
             //s0 = battle.getScore("");
             //s0.setScore(0);
-            s1.setScore(1);
-            s2.setScore(2);
-            s3.setScore(3);
-            s4.setScore(4);
-            s5.setScore(5);
+            try {
+                s1.setScore(1);
+                s2.setScore(2);
+                s3.setScore(3);
+                s4.setScore(4);
+                s5.setScore(5);
+            } catch (NullPointerException ignored){ }
             p.setScoreboard(Objects.requireNonNull(battle.getScoreboard()));
+            battle.getScoreboard().resetScores(p);
         }
     }
 

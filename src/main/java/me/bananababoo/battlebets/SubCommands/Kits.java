@@ -21,7 +21,7 @@ public class Kits {
 
                 p.getInventory().clear();
 
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit RedArmour " + p.getName());
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + p.getName());
 
                 // give MM items
                 List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
@@ -37,7 +37,8 @@ public class Kits {
                 p.getInventory().clear();
 
                 // give armour with cmi bc its easy
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + StartStop.getArena(TeamM.Team(p)).getKit() + p.getName());
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + p.getName());
+
 
                 List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
                 for (String redItem : redItems) {
@@ -49,6 +50,46 @@ public class Kits {
             }
         }
     }
+
+    public static void giveKit(String redKit, String blueKit, Player pl) {
+        if(redKit == null || blueKit == null){
+            Bukkit.getLogger().warning("no kit provided");
+            return;
+        }
+        if(TeamM.Team(pl).equals("red")){
+            Bukkit.getLogger().info("");
+
+            pl.getInventory().clear();
+
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + pl.getName());
+
+            // give MM items
+            List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
+            for (String redItem : redItems) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + pl.getName() + " " + redItem);
+            }
+
+            // spawn particles
+            pl.getWorld().spawnParticle(Particle.REDSTONE, pl.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 2));
+        }
+        else if (TeamM.Team(pl).equals("blue")){
+
+            pl.getInventory().clear();
+
+            // give armour with cmi bc its easy
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + pl.getName());
+
+            List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
+            for (String redItem : redItems) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + pl.getName() + " " + redItem);
+            }
+
+            // spawn particles
+            pl.getWorld().spawnParticle(Particle.REDSTONE, pl.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(0, 0, 255), 2));
+        }
+    }
+
+
     public static void setKit(String arena, String team, String kit){
         Arena a = StorageUtil.getArena(arena, team);
         assert a != null;
