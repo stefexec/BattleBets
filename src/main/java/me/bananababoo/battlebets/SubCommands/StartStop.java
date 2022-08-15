@@ -1,5 +1,6 @@
 package me.bananababoo.battlebets.SubCommands;
 
+
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.BattleBets;
 import me.bananababoo.battlebets.Events.OnDeath;
@@ -125,7 +126,8 @@ public class StartStop {
 
 
     public static void giveKit(){
-            Kits.giveKit(redArena.getKit(), blueArena.getKit());
+            // Kits.giveKit(redArena.getKit(), blueArena.getKit());
+
     }
 
 
