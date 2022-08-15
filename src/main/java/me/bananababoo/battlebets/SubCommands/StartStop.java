@@ -1,5 +1,6 @@
 package me.bananababoo.battlebets.SubCommands;
 
+
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.BattleBets;
 import me.bananababoo.battlebets.Events.OnDeath;
@@ -125,7 +126,8 @@ public class StartStop {
 
 
     public static void giveKit(){
-            Kits.giveKit(redArena.getKit(), blueArena.getKit());
+            // Kits.giveKit(redArena.getKit(), blueArena.getKit());
+
     }
 
 
@@ -179,9 +181,11 @@ public class StartStop {
                         if(TeamM.Team(p).equals("red")){
                             redDeathList.remove(p.getName());
                             p.teleport(redSpawn);
+                            p.getInventory().clear();
                         }else if(TeamM.Team(p).equals("blue")){
                             blueDeathList.remove(p.getName());
                             p.teleport(blueSpawn);
+                            p.getInventory().clear();
                         }
                         Scoreboard.updateScoreBoard();
                         giveKit();

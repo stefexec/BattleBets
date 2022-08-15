@@ -24,26 +24,29 @@ public class Kits {
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if(TeamM.Team(p).equals("red")){
+
+                // self
+                p.getInventory().clear();
+
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit RedArmour " + p.getName());
 
-                // give MM items
-                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-                for (int i = 0; i < redItems.size(); i++) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
-                }
-                
+                // still not convinced that we shouldn't just use cmi, it's so easy
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit RedItems " + p.getName());
+
+
                 // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 2));
             }
             else if (TeamM.Team(p).equals("blue")){
 
+                // self
+                p.getInventory().clear();
+
                 // give armour with cmi bc its easy
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit BlueArmour " + p.getName());
 
-                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-                for (int i = 0; i < redItems.size(); i++) {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItems.get(i));
-                }
+                // still not convinced that we shouldn't just use cmi, it's so easy
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit BlueItems " + p.getName());
 
                 // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(0, 0, 255), 2));
