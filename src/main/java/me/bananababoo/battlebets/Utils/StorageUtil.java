@@ -71,7 +71,7 @@ public class StorageUtil {
         File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Arenas.json");
         try {
             Reader reader = Files.newBufferedReader(file.toPath());
-            Type typeOf = new TypeToken<List<Arena>>() {}.getType();
+            Type typeOf = new TypeToken<List<Arena>>() {}.getType();  // TODO redo to allow for multilevel classes ei Location inside of Arena
             list = gson.fromJson(reader, typeOf);
             Bukkit.getLogger().info(list.toString());
             for (Arena a : list) {

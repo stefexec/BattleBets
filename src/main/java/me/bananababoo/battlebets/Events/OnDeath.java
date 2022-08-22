@@ -52,7 +52,7 @@ public class OnDeath implements Listener {
                     }
                 } else {
                     StartStop.giveKit(p);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getX() + " " + a.getY() + " " + a.getZ());
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getX() + " " + a.getY() + " " + a.getZ()); //  TODO fix orientation
                 }
                 Location l = new Location(e.getPlayer().getWorld(), a.getX(), a.getY(), a.getZ());
                 e.getPlayer().teleport(l);
