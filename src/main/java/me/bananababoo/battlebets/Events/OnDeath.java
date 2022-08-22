@@ -24,12 +24,11 @@ public class OnDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        Bukkit.getServer().broadcast(Component.text("SOMEONE DIED AAAAAAA " + e.getPlayer().getName()));
         Player p = e.getPlayer();
         if (StartStop.isBattleRunning()) {
 //            e.getPlayer().setHealth(Objects.requireNonNull(e.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
             if (StartStop.getMode().equals("lives")) {
-                Arena a = StartStop.getArena();
+                Arena a = StartStop.getArena(TeamM.Team(p));
                 Lives.removeLives(TeamM.Team(e.getPlayer()));
                 Bukkit.getLogger().warning(e.getPlayer() + ": died points remaining for " + TeamM.Team(p) + StartStop.getArena(TeamM.Team(p)).getLives());
                 Bukkit.getLogger().info(e.getPlayer() + "died and battlebets tried to increment counter");
@@ -59,7 +58,7 @@ public class OnDeath implements Listener {
                 e.getPlayer().teleport(l);
             } else if (StartStop.getMode().equals("rebirth")) {
                 deaths.computeIfPresent(e.getPlayer(), (k, v) -> v + 1);
-                Arena a = StartStop.getArena();
+                Arena a = StartStop.getArena(TeamM.Team(p));
                 Location l = new Location(e.getPlayer().getWorld(), a.getDeathX(), a.getDeathY(), a.getDeathZ());
                 try {
                     StorageUtil.getArena();
