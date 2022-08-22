@@ -116,7 +116,7 @@ public class StartStop {
                     Title title = Title.title(mainTitle, subtitle);
                     Lives.Init(redArena,blueArena);
                     Scoreboard.startScoreboard();
-                    Lives.setLivesFromArena(redArena.getName());
+                    Lives.setLivesFromArena(StartStop.getArena().getName());
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.showTitle(title);
                     }
@@ -229,23 +229,20 @@ public class StartStop {
         if(winner.equals("blue")){
             for(Player p : Bukkit.getOnlinePlayers()){
                 Component mainTitle = Component.text("Blue Team Wins", NamedTextColor.BLUE);
-                Component subtitle = Component.text("");
-                final Title title = Title.title(mainTitle,subtitle);
+                final Title title = Title.title(mainTitle,Component.empty());
                 p.showTitle(title);
             }
         }
         else if(winner.equals("red")){
             for(Player p : Bukkit.getOnlinePlayers()){
                 Component mainTitle = Component.text("Red Team Wins", NamedTextColor.RED);
-                Component subtitle = Component.text("");
-                final Title title = Title.title(mainTitle,subtitle);
+                final Title title = Title.title(mainTitle,Component.empty());
                 p.showTitle(title);
             }
         }else{
             for(Player p: Bukkit.getOnlinePlayers()){
                 Component mainTitle = Component.text(winner,NamedTextColor.GRAY);
-                Component subtitle = Component.text("");
-                final Title title = Title.title(mainTitle,subtitle);
+                final Title title = Title.title(mainTitle,Component.empty());
                 p.showTitle(title);
             }
         }
