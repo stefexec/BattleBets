@@ -34,9 +34,10 @@ public class Scoreboard {
         stopScoreBoard();
         Bukkit.getLogger().info("tried to start scoreboard");
         ScoreboardManager sbm = Bukkit.getScoreboardManager();
-        var board = sbm.getNewScoreboard();  //todo something around here is buggy maybe? but only on rebirth are we not correctly closing other one we shold be closing right
+        var board = sbm.getNewScoreboard();  //todo something around here is buggy maybe? but only on rebirth are we not correctly closing other one we should be closing right
         battle = board.registerNewObjective("battle", "dummy", Component.text("     BattleBets    ").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD));
         battle.setDisplaySlot(DisplaySlot.SIDEBAR);
+        Lives.setLivesFromArena(StartStop.getArena().getName());
         updateScoreBoard();
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setScoreboard(board);
@@ -72,11 +73,11 @@ public class Scoreboard {
                 s3 = battle.getScore(ChatColor.BLUE + "Blue Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam("blue"));
                 s2 = battle.getScore(ChatColor.RED + "Red Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam("red"));
 //                if (TeamM.onValidTeam(p)) {
-//                    s2 = battle.getScore(ChatColor.RED + "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
+//                    s2 = battle.getScore(ChatColor.+ "Lives: " + ChatColor.WHITE + ChatColor.BOLD + Lives.getLivesFromTeam(TeamM.Team(p)));
 //                } else {
 //                    s2 = battle.getScore("");
 //                }
-//            s1 = battle.getScore("");
+            s1 = battle.getScore("");
             }else if(StartStop.getMode().equals("rebirth")){
                 StringBuilder red = new StringBuilder();
                 StringBuilder blue = new StringBuilder();
@@ -103,8 +104,9 @@ public class Scoreboard {
                     } else red.append(alive).append(" ");
                 }
 
-                s2 = battle.getScore(ChatColor.BLUE + "Blue Team: " + blue); //todo make scoreboard display info about rebirth  ✓
-                s1 = battle.getScore(ChatColor.RED + "Red Team:  " + red);
+                s3 = battle.getScore(ChatColor.BLUE + "Blue Team: " + blue); //todo make scoreboard display info about rebirth  ✓
+                s2 = battle.getScore(ChatColor.RED + "Red Team:  " + red);
+                s1 =  battle.getScore("");
             }
             //s0 = battle.getScore("");
             //s0.setScore(0);
@@ -114,8 +116,11 @@ public class Scoreboard {
                 s3.setScore(3);
                 s4.setScore(4);
                 s5.setScore(5);
-            } catch (NullPointerException ignored){ }
+            } catch (NullPointerException e){
+                Bukkit.getLogger().warning(e.getMessage());
+            }
             p.setScoreboard(Objects.requireNonNull(battle.getScoreboard()));
+            p.sendMessage("tried to start scoreboard");
             battle.getScoreboard().resetScores(p);
         }
     }
