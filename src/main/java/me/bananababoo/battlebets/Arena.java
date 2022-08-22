@@ -6,7 +6,7 @@ import org.bukkit.Location;
 public class Arena {
     private final String arenaName;
     private final String team;
-    private int lives;
+    private int lives = 0;
     private int x;
     private int z;
     private int y;
