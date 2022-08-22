@@ -18,13 +18,8 @@ public class Lives {
     public static void Init(Arena red, Arena blue){
         initLives(red);
         initLives(blue);
-        for(Player p : Bukkit.getOnlinePlayers()){
-            if(TeamM.Team(p).equals("red")){
-                redLives = 0;
-            }else if(TeamM.Team(p).equals("blue")) {
-                blueLives = 0;
-            }
-        }
+        redLives = 0;
+        blueLives = 0;
     }
     public static void Init(){
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -62,7 +57,7 @@ public class Lives {
         Arena blue = StorageUtil.getArena(arenaName, "blue");
         redLives = red.getLives();
         blueLives = blue.getLives();
-        Scoreboard.updateScoreBoard();
+//        Scoreboard.updateScoreBoard();
     }
 
     public static void removeLives(String team){
