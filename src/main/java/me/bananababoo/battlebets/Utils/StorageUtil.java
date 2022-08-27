@@ -8,6 +8,7 @@ import me.bananababoo.battlebets.Extra;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.TeamM;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.*;
@@ -23,18 +24,18 @@ public class StorageUtil {
 
 
     public static void addArena(String arenaName, String team){
-        arena = new Arena(arenaName, team, 0,100,0, 99);
+        arena = new Arena(arenaName, team, new Location(Bukkit.getWorld("battlebets"), 0, 100, 0), 99);
         for(Arena a : list){
             if(arenaExistsance()){
                 return;
             }
         }
-        arena = new Arena(arenaName, team, 0,100,0, 99);
+        arena = new Arena(arenaName, team,  new Location(Bukkit.getWorld("battlebets"), 0, 100, 0), 99);
         list.add(arena);
         saveFile();
     }
     public static void addArena(String arenaName, String team, int x, int y, int z){
-        arena = new Arena(arenaName, team, x,y,z, 99);
+        arena = new Arena(arenaName, team, new Location(Bukkit.getWorld("battlebets"), x, y, z), 99);
         list.add(arena);
         saveFile();
     }

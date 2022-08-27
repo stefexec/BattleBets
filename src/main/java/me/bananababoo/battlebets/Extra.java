@@ -4,7 +4,8 @@ import org.bukkit.Bukkit;
 
 import java.util.Arrays;
 
-public class Extra {
+public class
+Extra {
     public static boolean isNumber(String strNum) {
         if (strNum == null) {
             return false;

@@ -93,7 +93,7 @@ public class Kits {
     public static void setKit(String arena, String team, String kit){
         Arena a = StorageUtil.getArena(arena, team);
         assert a != null;
-        Arena b = new Arena(a.getName(), a.getTeam(), a.getX(), a.getY(), a.getZ(), a.getLives(), kit);
+        Arena b = new Arena(a.getName(), a.getTeam(), a.getLives(), kit, a.getLocation());
         StorageUtil.setArena(b);
     }
 }

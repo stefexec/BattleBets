@@ -52,20 +52,19 @@ public class OnDeath implements Listener {
                     }
                 } else {
                     StartStop.giveKit(p);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getX() + " " + a.getY() + " " + a.getZ()); //  TODO fix orientation
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getX() + " " + a.getY() + " " + a.getZ() + " " + a.getYaw() + " " + a.getPitch() + " "); //  TODO fix orientation
                 }
-                Location l = new Location(e.getPlayer().getWorld(), a.getX(), a.getY(), a.getZ());
-                e.getPlayer().teleport(l);
+                e.getPlayer().teleport(a.getLocation());
             } else if (StartStop.getMode().equals("rebirth")) {
                 deaths.computeIfPresent(e.getPlayer(), (k, v) -> v + 1);
                 Arena a = StartStop.getArena(TeamM.Team(p));
-                Location l = new Location(e.getPlayer().getWorld(), a.getDeathX(), a.getDeathY(), a.getDeathZ());
+                Location l = a.getLocation();
                 try {
                     StorageUtil.getArena();
                 } catch (Exception error) {
                     Bukkit.getLogger().warning(error.getMessage());
                 }
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getDeathX() + " " + a.getDeathY() + " " + a.getDeathZ());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + e.getPlayer().getName() + " " + a.getDeathX() + " " + a.getDeathY() + " " + a.getDeathZ() + " " + a.getYaw() + " " + a.getPitch() + " ");
                 e.getPlayer().teleport(l);
                 StartStop.rebirthPlayer(e.getPlayer());
                 if (StartStop.isBattleRunning()) {

@@ -1,6 +1,7 @@
 package me.bananababoo.battlebets;
 
 import com.Zrips.CMI.CMI;
+import me.bananababoo.battlebets.Events.OnDamage;
 import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Events.OnJoin;
 import me.bananababoo.battlebets.Events.OnMove;
@@ -60,6 +61,7 @@ public final class BattleBets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
         getServer().getPluginManager().registerEvents(new OnDeath(), this);
         getServer().getPluginManager().registerEvents(new OnMove(), this);
+        getServer().getPluginManager().registerEvents(new OnDamage(), this);
 
 
 

@@ -14,7 +14,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class StartStop {
     private static final List<String> blueDeathList = new ArrayList<>();
     private static Location redSpawn = new Location(Bukkit.getWorld("battlebets"), 0d,150d,0d);
     private static Location blueSpawn = new Location(Bukkit.getWorld("battlebets"), 0d,150d,0d);
-    private static boolean cancle = false;
+    private static boolean cancel = false;
 
     public static Arena getArena() {
         return redArena;
@@ -39,7 +38,7 @@ public class StartStop {
     public static Arena getArena(String color) {
         if (color.equals("red")) return redArena;
         else if (color.equals("blue")) return blueArena;
-        return null;
+        return redArena;
     }
 
     public static void resetDeathLists(){
@@ -63,13 +62,17 @@ public class StartStop {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.getInventory().clear();
             if (TeamM.Team(p).equals("red")) {
-                redSpawn = new Location(p.getWorld(), red.getX(), red.getY(), red.getZ());
+                redSpawn = red.getLocation();
+                p.sendMessage(redSpawn.toString());
                 p.teleport(redSpawn);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + red.getX() + " " + red.getY() + " " + red.getZ());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + red.getX() + " " + red.getY() + " " + red.getZ() + " " +  red.getYaw());
+                p.setGameMode(GameMode.SURVIVAL);
             } else if (TeamM.Team(p).equals("blue")) {
-                blueSpawn = new Location(p.getWorld(), blue.getX(), blue.getY(), blue.getZ());
+                p.sendMessage(blueSpawn.toString());
+                blueSpawn = blue.getLocation();
                 p.teleport(blueSpawn);
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + blue.getX() + " " + blue.getY() + " " + blue.getZ());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + blue.getX() + " " + blue.getY() + " " + blue.getZ() + " " + blue.getYaw());
+                p.setGameMode(GameMode.SURVIVAL);
             }
         }
 
@@ -78,49 +81,54 @@ public class StartStop {
 
             @Override
             public void run() {
-                if (i == 0) {
-                    setFrozen(true);
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        final Component mainTitle = Component.text("You are on " + TeamM.Team(p) + " Team",  TeamM.teamColor(p));
+                switch (i) {
+                    case 0 -> {
+                        setFrozen(true);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            final Component mainTitle = Component.text("You are on " + TeamM.Team(p) + " Team", TeamM.teamColor(p));
+                            final Component subtitle = Component.empty();
+                            Title title = Title.title(mainTitle, subtitle);
+                            p.showTitle(title);
+                        }
+                    }
+                    case 1 -> {
+                        final Component mainTitle = Component.text("3", NamedTextColor.RED);
                         final Component subtitle = Component.empty();
                         Title title = Title.title(mainTitle, subtitle);
-                        p.showTitle(title);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.showTitle(title);
+                        }
                     }
-                } else if (i == 1) {
-                    final Component mainTitle = Component.text("3", NamedTextColor.RED);
-                    final Component subtitle = Component.empty();
-                    Title title = Title.title(mainTitle, subtitle);
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.showTitle(title);
+                    case 2 -> {
+                        final Component mainTitle = Component.text("2", NamedTextColor.YELLOW);
+                        final Component subtitle = Component.empty();
+                        Title title = Title.title(mainTitle, subtitle);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.showTitle(title);
+                        }
                     }
-                } else if (i == 2) {
-                    final Component mainTitle = Component.text("2", NamedTextColor.YELLOW);
-                    final Component subtitle = Component.empty();
-                    Title title = Title.title(mainTitle, subtitle);
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.showTitle(title);
-                    }
+                    case 3 -> {
+                        final Component mainTitle = Component.text("1", NamedTextColor.GREEN);
+                        final Component subtitle = Component.empty();
+                        Title title = Title.title(mainTitle, subtitle);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.showTitle(title);
 
-                } else if (i == 3) {
-                    final Component mainTitle = Component.text("1", NamedTextColor.GREEN);
-                    final Component subtitle = Component.empty();
-                    Title title = Title.title(mainTitle, subtitle);
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.showTitle(title);
-
+                        }
                     }
-                } else if (i == 4) {
-                    setFrozen(false);
-                    final Component mainTitle = Component.text("GO", NamedTextColor.GOLD);
-                    final Component subtitle = Component.empty();
-                    Title title = Title.title(mainTitle, subtitle);
-                    Lives.Init(redArena,blueArena);
-                    Scoreboard.startScoreboard();
-                    Lives.setLivesFromArena(StartStop.getArena().getName());
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.showTitle(title);
+                    case 4 -> {
+                        setFrozen(false);
+                        final Component mainTitle = Component.text("GO", NamedTextColor.GOLD);
+                        final Component subtitle = Component.empty();
+                        Title title = Title.title(mainTitle, subtitle);
+                        Lives.Init(redArena, blueArena);
+                        Scoreboard.startScoreboard();
+                        Lives.setLivesFromArena(StartStop.getArena().getName());
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            p.showTitle(title);
+                        }
+                        Kits.giveKit(redArena.getKit(), blueArena.getKit());
                     }
-                    Kits.giveKit(redArena.getKit(), blueArena.getKit());
                 }
                 if(i < 5) { i++; }
 
@@ -142,7 +150,7 @@ public class StartStop {
 
 
     public static void rebirthPlayer(@NotNull Player p){
-        cancle = false;
+        cancel = false;
         int num = 0;
         if(TeamM.Team(p).equals("red")){
             if(!redDeathList.contains(p.getName())){
@@ -166,26 +174,23 @@ public class StartStop {
         }else{
             Arena a = StartStop.getArena();
             Location l = new Location(p.getWorld(), a.getDeathX(), a.getDeathY(), a.getDeathZ());
-            if(TeamM.Team(p).equals("red")){
-                p.teleport(redSpawn);
-            }else if (TeamM.Team(p).equals("red")){
-                p.teleport(blueSpawn);
-            }
+            p.teleport(l);
             p.getInventory().clear();
             p.setInvulnerable(true);
             p.setGameMode(GameMode.SPECTATOR);
-            BukkitTask task = new BukkitRunnable(){
-                int i = 0;
+            new BukkitRunnable(){
+                int timespent = 0;
                 final int deaths = OnDeath.getDeaths(p);
                 final double time = (.6*(deaths*deaths))+(3*deaths)-2.6;
 
                 @Override
                 public void run() {
-                    if(cancle){
+                    if(cancel){
                         cancel();
                     }
-                    p.sendActionBar(Component.text("Time until revived: " + Math.round(time - i)));
-                    if((time-i) <= 0){
+                    p.sendMessage(Component.text("yell at banana if there is text above your health bar in the action bar slot pls " + Math.round(time - timespent)));
+                    p.sendActionBar(Component.text("Time until revived: " + Math.round(time - timespent)));
+                    if((time-timespent) <= 0){
                         if(TeamM.Team(p).equals("red")){
                             redDeathList.remove(p.getName());
                             p.teleport(redSpawn);
@@ -196,14 +201,16 @@ public class StartStop {
                             p.getInventory().clear();
                         }
                         Scoreboard.updateScoreBoard();
+                        p.setGameMode(GameMode.SURVIVAL);
                         giveKit();
                         p.setInvulnerable(false);
 
                         cancel();
                     }
-                    i++;
+                    timespent++;
                 }
             }.runTaskTimer(BattleBets.getPlugin(),0,20);
+
         }
     }
     public static boolean isPlayerDead(Player player) {
@@ -225,6 +232,7 @@ public class StartStop {
             //p.setHealth(0);    todo check if this needs to exist
             Location location = new Location(p.getWorld(),0,150,0);
             p.teleport(location);
+            p.setGameMode(GameMode.SURVIVAL);
         }
         if(winner.equals("blue")){
             for(Player p : Bukkit.getOnlinePlayers()){
@@ -248,7 +256,7 @@ public class StartStop {
         }
         Scoreboard.stopScoreBoard();
         OnDeath.resetDeathCounter();
-        cancle = true;
+        cancel = true;
 
     }
 

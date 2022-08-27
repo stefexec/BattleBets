@@ -35,7 +35,7 @@ public class Lives {
 //    }
 
     public static void setMaxLives(int Lives, Arena a ){
-        Arena arena = new Arena(a.getName(), a.getTeam(), a.getX(), a.getY(), a.getZ(), Lives);
+        Arena arena = new Arena(a.getName(), a.getTeam(), a.getLocation(), Lives);
         StorageUtil.setArena(arena);
         if(a.getTeam().equals("red")){
             redLives = Lives;
@@ -79,8 +79,8 @@ public class Lives {
     }
 
     public static void resetLives(Arena a){
-        Arena redArena = new Arena(a.getName(), "red", a.getX(), a.getY(), a.getZ(), a.getLives());
-        Arena blueArena = new Arena(a.getName(), "blue", a.getX(), a.getY(), a.getZ(), a.getLives());
+        Arena redArena = new Arena(a.getName(), "red", a.getLocation(), a.getLives());
+        Arena blueArena = new Arena(a.getName(), "blue",a.getLocation(), a.getLives());
         setRedMaxLives(redArena.getLives());
         setBlueMaxLives(blueArena.getLives());
         Init();
