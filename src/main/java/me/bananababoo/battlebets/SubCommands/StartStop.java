@@ -1,10 +1,12 @@
 package me.bananababoo.battlebets.SubCommands;
 
 
+import it.unimi.dsi.fastutil.ints.IntIntPair;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.BattleBets;
 import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Scoreboard;
+import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.TeamM;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StartStop {
@@ -47,6 +50,19 @@ public class StartStop {
 
     }
 
+    public static void addAllPlayersToTeam(){
+        boolean flip = false;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if(TeamM.Team(player) == null){
+                if (flip) BBPlayer.setTeam(player,player.getName(), "blue");
+                else BBPlayer.setTeam(player,player.getName(), "red");
+                flip = !flip;
+            }
+
+            }
+        }
+
+
     public static void start(Arena red, Arena blue) {
         redArena = red;
         blueArena = blue;
@@ -59,20 +75,58 @@ public class StartStop {
         OnDeath.resetDeathCounter();
         Lives.resetLives(redArena);
         Lives.resetLives(blueArena);
+        redSpawn = red.getLocation();
+        blueSpawn = blue.getLocation();
+
+        HashMap<Integer, IntIntPair> coordsList = new HashMap<>();
+        coordsList.put(1,IntIntPair.of(1, -1));
+        coordsList.put(5,IntIntPair.of(1, 0));
+        coordsList.put(2,IntIntPair.of(1, 1));
+        coordsList.put(6,IntIntPair.of(0, -1));
+        coordsList.put(9,IntIntPair.of(0, 0));
+        coordsList.put(7,IntIntPair.of(0, 1));
+        coordsList.put(8,IntIntPair.of(-1, -1));
+        coordsList.put(3,IntIntPair.of(-1, 0));
+        coordsList.put(4,IntIntPair.of(-1, 1));
+
+        int redi = 0, blui = 0; //red iterator and blue iterator
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.getInventory().clear();
             if (TeamM.Team(p).equals("red")) {
                 redSpawn = red.getLocation();
-                p.sendMessage(redSpawn.toString());
-                p.teleport(redSpawn);
+
+                redi++;
+                int xoffset = coordsList.get(redi%9).firstInt();
+                int zoffset = coordsList.get(redi%9).rightInt();
+                Location loc = redSpawn.clone();
+                p.sendMessage(xoffset + " " + zoffset);
+                p.sendMessage(redi + " " + redi%9);
+                loc.setX(loc.getX() + xoffset);
+                loc.setZ(loc.getZ() + zoffset);
+                p.sendMessage(loc.toString());
+                p.teleport(loc);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + red.getX() + " " + red.getY() + " " + red.getZ() + " " +  red.getYaw());
                 p.setGameMode(GameMode.SURVIVAL);
             } else if (TeamM.Team(p).equals("blue")) {
-                p.sendMessage(blueSpawn.toString());
                 blueSpawn = blue.getLocation();
-                p.teleport(blueSpawn);
+
+                blui++;
+                int xoffset = coordsList.get(blui).firstInt();
+                int zoffset = coordsList.get(blui).rightInt();
+                Location loc = blueSpawn.clone();
+                loc.setX(loc.getX() + xoffset);
+                loc.setZ(loc.getZ() + zoffset);
+                p.sendMessage(xoffset + " " + zoffset);
+                p.sendMessage(blui + "");
+
+                p.teleport(loc);
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " " + blue.getX() + " " + blue.getY() + " " + blue.getZ() + " " + blue.getYaw());
                 p.setGameMode(GameMode.SURVIVAL);
+            } else if (!p.isOp()){
+                p.setGameMode(GameMode.SPECTATOR);
+                Location t = redSpawn;
+                t.setY(redSpawn.getY() + 20);
+                p.teleport(t);
             }
         }
 

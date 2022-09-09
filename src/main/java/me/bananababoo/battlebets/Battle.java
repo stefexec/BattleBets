@@ -5,7 +5,6 @@ import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.Utils.StorageUtil;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
@@ -15,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static net.kyori.adventure.text.Component.*;
+import static net.kyori.adventure.text.Component.text;
 
 public class Battle implements CommandExecutor {
 
@@ -58,7 +57,10 @@ public class Battle implements CommandExecutor {
                             BBPlayer.setTeam(p, args[2], args[3]);
                             p.sendMessage(text("Player set to " + args[3] + " team", NamedTextColor.GREEN));
                         }
-                    }break;
+                    }else if(args[0].equals("team") && args[1].equals("setallplayers")){
+                        StartStop.addAllPlayersToTeam();
+                    }
+                    break;
                 case 5: {
                     if(args[4].equals("spawn") || args[4].equals("deathspawn")){
                         if(StorageUtil.getArenas().contains(args[2])){

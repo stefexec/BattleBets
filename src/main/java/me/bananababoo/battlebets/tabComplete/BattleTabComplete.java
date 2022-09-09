@@ -1,5 +1,6 @@
 package me.bananababoo.battlebets.tabComplete;
 
+import com.Zrips.CMI.CMI;
 import me.bananababoo.battlebets.Extra;
 import me.bananababoo.battlebets.Utils.StorageUtil;
 import org.bukkit.Bukkit;
@@ -62,7 +63,11 @@ public class BattleTabComplete implements TabCompleter {
             else if(args[1].equals("set")) CPM(args[3], List.of("red", "blue","both"));
 
         } else if (args.length == 5) {
-            CPM(args[4], List.of("lives", "kit","mode", "spawn", "deathspawn"));                  //TODO add ~ ~ ~ position support
+            CPM(args[4], List.of("lives", "kit", "mode", "spawn", "deathspawn"));                  //TODO add ~ ~ ~ position support
+        } else if (args.length == 6){
+            if(args[4].equals("kits")){
+                CPM(args[5], CMI.getInstance().getKitsManager().getKitMap().keySet().stream().toList());  // maybe this magic will work but who knows :D
+            }
         } else if(args[0].equals("arena")){
                 if(args[1].equals("set") && !List.of("lives", "kit","mode", "spawn", "deathspawn").contains(args[4]) && !Extra.isNumber(args[5])){
                     CPM(args[3], List.of("red", "blue","both"));

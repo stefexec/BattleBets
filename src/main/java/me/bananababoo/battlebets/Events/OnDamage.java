@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class OnDamage implements Listener {
 
     @EventHandler
-    public void ondamage(EntityDamageByEntityEvent e){
+    public void onDamage(EntityDamageByEntityEvent e){
         if(e.getEntityType().equals(EntityType.PLAYER)){
             Player damager = (Player) e.getDamager();  // does damage
             Player damagee = (Player) e.getEntity();   // receives damage
