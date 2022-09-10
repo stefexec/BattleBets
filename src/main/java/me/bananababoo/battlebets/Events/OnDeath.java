@@ -1,13 +1,11 @@
 package me.bananababoo.battlebets.Events;
 
-import com.google.gson.Gson;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.TeamM;
 import me.bananababoo.battlebets.Utils.StorageUtil;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -60,7 +58,7 @@ public class OnDeath implements Listener {
                 Arena a = StartStop.getArena(TeamM.Team(p));
                 Location l = a.getLocation();
                 try {
-                    StorageUtil.getArena();
+                    StorageUtil.LoadFiles();
                 } catch (Exception error) {
                     Bukkit.getLogger().warning(error.getMessage());
                 }
@@ -88,16 +86,17 @@ public class OnDeath implements Listener {
     public static int getDeaths(Player p) {
         return deaths.get(p);
     }
-
-    public static int getTeamDeaths(String team) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (TeamM.Team(p).equals(team)) {
-                return getDeaths(p);
-            }
-        }
-        return 0;
-    }
 }
+
+//    public static int getTeamDeaths(String team) {
+//        for (Player p : Bukkit.getOnlinePlayers()) {
+//            if (TeamM.Team(p).equals(team)) {
+//                return getDeaths(p);
+//            }
+//        }
+//        return 0;
+//    }
+//}
 
 //    1:hi
 //    2:by

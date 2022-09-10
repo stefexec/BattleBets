@@ -6,6 +6,7 @@ import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Events.OnJoin;
 import me.bananababoo.battlebets.Events.OnMove;
 import me.bananababoo.battlebets.SubCommands.StartStop;
+import me.bananababoo.battlebets.Utils.StorageUtil;
 import me.bananababoo.battlebets.tabComplete.BattleTabComplete;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
@@ -41,6 +42,8 @@ public final class BattleBets extends JavaPlugin {
 
 
         // ##################################################################
+
+        StorageUtil.storeBattleItem(new BattleItem(Bukkit.getServer().getWorld("battlebets").getBlockAt(-13,65,-389).getLocation().toCenterLocation(), "test",30));
 
         RegisteredServiceProvider<LuckPerms> lpprovider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (lpprovider != null) {
