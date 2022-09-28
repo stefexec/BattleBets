@@ -38,7 +38,7 @@ public class Battle implements CommandExecutor {
                             StartStop.setMode("rebirth");
                             p.sendMessage(text("Mode set to rebirth", NamedTextColor.GREEN));
                         }
-                        // TODO CHECK IF PLAYER IS WITHEN 1 BLOCK OF A SPAWN AND SET THAT TEAMS SPAWN TO IT
+                        // TODO CHECK IF PLAYER IS WITHIN 1 BLOCK OF A SPAWN AND SET THAT TEAMS SPAWN TO IT
                     }break;
                 case 3:
                     if(args[0].equals("arena")){
