@@ -2,10 +2,8 @@ package me.bananababoo.battlebets.Utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import me.bananababoo.battlebets.Arena;
-import me.bananababoo.battlebets.BattleBets;
+import me.bananababoo.battlebets.*;
 import me.bananababoo.battlebets.BattleItem;
-import me.bananababoo.battlebets.Extra;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -95,16 +93,17 @@ public class StorageUtil {
         saveFile();
     }
 
-    public static BattleItem getBattleItem(String name) {
+    public static BattleItem getBattleItem(String arena) {
         Gson gson = new Gson();
-        File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Arenas.json");
+        File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Items.json");
         try {
             Reader reader = Files.newBufferedReader(file.toPath());
             Type typeOf = new TypeToken<List<Arena>>() {}.getType();
             arenaList = gson.fromJson(reader, typeOf);
             Bukkit.getLogger().info(arenaList.toString());
+            Bukkit.getLogger().info(itemList.toString());
             for (BattleItem a : itemList) {
-                if (a.getMmName().equals(name)) {
+                if(a.getArena().equals(arena)) {
                     return a;
                 }
             }
