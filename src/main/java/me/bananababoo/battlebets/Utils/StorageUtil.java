@@ -2,8 +2,10 @@ package me.bananababoo.battlebets.Utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import me.bananababoo.battlebets.*;
-import me.bananababoo.battlebets.BattleItem;
+import me.bananababoo.battlebets.Arena;
+import me.bananababoo.battlebets.BattleBets;
+import me.bananababoo.battlebets.BattleItemArena;
+import me.bananababoo.battlebets.Extra;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class StorageUtil {
     static List<Arena> arenaList = new ArrayList<>(); // arenaList of all loaded arenas
-    static List<BattleItem> itemList = new ArrayList<>(); // arenaList of all loaded arenas
+    static List<BattleItemArena> itemList = new ArrayList<>(); // arenaList of all loaded battle items
     static Arena arena;
 
 
@@ -31,11 +33,11 @@ public class StorageUtil {
         arenaList.add(arena);
         saveFile();
     }
-    public static void addArena(String arenaName, String team, int x, int y, int z){
-        arena = new Arena(arenaName, team, new Location(Bukkit.getWorld("battlebets"), x, y, z), 99);
-        arenaList.add(arena);
-        saveFile();
-    }
+//    public static void addArena(String arenaName, String team, int x, int y, int z){
+//        arena = new Arena(arenaName, team, new Location(Bukkit.getWorld("battlebets"), x, y, z), 99);
+//        arenaList.add(arena);
+//        saveFile();
+//    }
     public static void setArena(Arena arena){
         try {
             LoadFiles();
@@ -64,7 +66,7 @@ public class StorageUtil {
 
         file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Items.json");
         reader = Files.newBufferedReader(file.toPath());
-        typeOf = new TypeToken<List<BattleItem>>() {}.getType();
+        typeOf = new TypeToken<List<BattleItemArena>>() {}.getType();
         itemList = gson.fromJson(reader, typeOf);
         Bukkit.getLogger().info(itemList.toString());
     }
@@ -88,12 +90,12 @@ public class StorageUtil {
         }
         return null;
     }
-    public static void storeBattleItem(BattleItem item){
+    public static void storeBattleItem(BattleItemArena item){
         itemList.add(item);
         saveFile();
     }
 
-    public static BattleItem getBattleItem(String arena) {
+    public static BattleItemArena getBattleItem(String arena) {
         Gson gson = new Gson();
         File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Items.json");
         try {
@@ -101,8 +103,8 @@ public class StorageUtil {
             Type typeOf = new TypeToken<List<Arena>>() {}.getType();
             arenaList = gson.fromJson(reader, typeOf);
             Bukkit.getLogger().info(arenaList.toString());
-            Bukkit.getLogger().info(itemList.toString());
-            for (BattleItem a : itemList) {
+            Bukkit.getLogger().info(itemList.stream().toList().toString());
+            for (BattleItemArena a : itemList) {
                 if(a.getArena().equals(arena)) {
                     return a;
                 }
@@ -116,7 +118,7 @@ public class StorageUtil {
 
     public static List<String> getArenas(){
         List<String> teamList = new ArrayList<>();
-        if(!arenaFileExists()){
+        if(arenaFileNotExists()){
             Bukkit.getLogger().info("no file?, report to banaaanana");
             return teamList;
         }
@@ -133,7 +135,7 @@ public class StorageUtil {
     }
 
     public static boolean arenaExistsance(){
-        if(!arenaFileExists()){
+        if(arenaFileNotExists()){
             return false;
         }
         for(Arena a : arenaList){
@@ -176,9 +178,9 @@ public class StorageUtil {
 //        String json = gson.toJson(arenaList);
 //        Bukkit.getLogger().info(json);
 //    }
-    public static boolean arenaFileExists(){
+    public static boolean arenaFileNotExists(){
         File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + "/Arenas.json");
-        return file.exists();
+        return !file.exists();
     }
 //    public static Arena getArenaFromPlayer(Player p){
 //        return(StartStop.getArena(TeamM.Team(p)));
