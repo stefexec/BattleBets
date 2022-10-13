@@ -8,17 +8,14 @@ import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.TeamM;
+import me.bananababoo.battlebets.Utils.ItemUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,18 +63,6 @@ public class StartStop {
             }
         }
 
-    public static void initItemSpaning(int timeSecs){
-        Location spawn = blueSpawn.clone();
-        ItemStack item = new ItemStack(Material.STONE);
-        spawn.toCenterLocation().setY(spawn.getY() + 1);
-
-        int i = Bukkit.getScheduler().runTaskTimer(BattleBets.getPlugin(), () -> {
-
-            Item dropitem = redSpawn.getWorld().dropItem(spawn, item);
-            dropitem.setVelocity(dropitem.getVelocity().zero());
-
-        }, 0, timeSecs).getTaskId();
-    }
 
 
     public static void start(Arena red, Arena blue) {
@@ -94,6 +79,7 @@ public class StartStop {
         Lives.resetLives(blueArena);
         redSpawn = red.getLocation();
         blueSpawn = blue.getLocation();
+        ItemUtil.start();
 
 
         HashMap<Integer, IntIntPair> coordsList = new HashMap<>();
@@ -329,6 +315,7 @@ public class StartStop {
         Scoreboard.stopScoreBoard();
         OnDeath.resetDeathCounter();
         cancel = true;
+        Bukkit.getScheduler().cancelTasks(BattleBets.getPlugin());
 
     }
 

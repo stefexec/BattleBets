@@ -13,6 +13,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public final class BattleBets extends JavaPlugin {
@@ -22,10 +25,6 @@ public final class BattleBets extends JavaPlugin {
     static BattleBets plugin;
     static CMI cmi;
     public static LuckPerms LPapi;
-    public static LuckPerms getLuckPerms(){
-        return LPapi;
-    }
-    public static CMI getCMi(){return cmi;}
 
     @Override
     public void onEnable() {
@@ -42,17 +41,24 @@ public final class BattleBets extends JavaPlugin {
 
 
         // ##################################################################
-
-        StorageUtil.storeBattleItem(new BattleItem(Bukkit.getServer().getWorld("battlebets").getBlockAt(-13,65,-389).getLocation().toCenterLocation(), "test",30));
+        try {
+            StorageUtil.LoadFiles();
+        } catch (IOException e) {
+            Bukkit.getLogger().warning(Arrays.toString(e.getStackTrace()));
+        }
+        StorageUtil.storeBattleItem(new BattleItemArena("sonic",List.of(new ItemBase(Objects.requireNonNull(Bukkit.getServer().getWorld("battlebets")).getBlockAt(-7,86,-15).getLocation().toCenterLocation(), "test",30))));
 
         RegisteredServiceProvider<LuckPerms> lpprovider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
         if (lpprovider != null) {
             LPapi = lpprovider.getProvider();
         }
         else{
-            Bukkit.getLogger().warning("CMI not detecded");
+            Bukkit.getLogger().warning("LuckPerms not detecded");
         }
+
         StartStop.resetDeathLists();
+
         RegisteredServiceProvider<CMI> cmiprovider = Bukkit.getServicesManager().getRegistration(CMI.class);
         if (cmiprovider != null) {
             cmi = cmiprovider.getProvider();
