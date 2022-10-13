@@ -2,7 +2,7 @@ package me.bananababoo.battlebets.tabComplete;
 
 import com.Zrips.CMI.CMI;
 import me.bananababoo.battlebets.Extra;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

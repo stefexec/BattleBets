@@ -1,20 +1,20 @@
-package me.bananababoo.battlebets.Utils;
+package me.bananababoo.battlebets.SubCommands;
 
 import io.lumine.mythic.api.adapters.AbstractItemStack;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import me.bananababoo.battlebets.BattleBets;
-import me.bananababoo.battlebets.SubCommands.StartStop;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
-public class ItemUtil {
+public class Items {
 
     public static void start(){
-        Objects.requireNonNull(StorageUtil.getBattleItem(StartStop.getArena().getName())).getItems().forEach(itemBase -> {
+        Objects.requireNonNull(StorageUtil.getBattleItemArena(StartStop.getArena().getName())).getItems().forEach(itemBase -> {
             BukkitRunnable runnable = new BukkitRunnable() {
                 Entity entity = null;
                 @Override

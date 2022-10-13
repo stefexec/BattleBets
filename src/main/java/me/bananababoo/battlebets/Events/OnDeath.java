@@ -5,7 +5,7 @@ import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.TeamM;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
