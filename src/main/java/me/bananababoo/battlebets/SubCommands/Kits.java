@@ -2,13 +2,10 @@ package me.bananababoo.battlebets.SubCommands;
 
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.TeamM;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class Kits {
     public static void giveKit(String redKit, String blueKit) {

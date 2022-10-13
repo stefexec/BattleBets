@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamM {
+    private TeamM() {
+        throw new IllegalStateException("Utility class");
+    }
     public static String Team(Player p) {
         PersistentDataContainer data = p.getPersistentDataContainer();
-        return((data.get(new NamespacedKey(BattleBets.getPlugin(), "team"), PersistentDataType.STRING)));
+        return(data.get(new NamespacedKey(BattleBets.getPlugin(), "team"), PersistentDataType.STRING));
     }
     public static TextColor teamColor(Player p){
         if( Team(p).equals("blue"))    { return TextColor.color(0,0,255); }

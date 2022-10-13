@@ -2,14 +2,14 @@ package me.bananababoo.battlebets;
 
 import org.bukkit.Location;
 
-public class ItemBase {
+public class BattleItem {
     private final String mmName;
     private final int timer;
     private final int x;
     private final  int y;
     private final int z;
 
-    public ItemBase(Location location, String mmName, int timer) {
+    public BattleItem(Location location, String mmName, int timer) {
         this.mmName = mmName;
         this.timer = timer;
         this.x = location.getBlockX();

@@ -1,4 +1,4 @@
-package me.bananababoo.battlebets.Utils;
+package me.bananababoo.battlebets.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 public class BattleItem {
 
     String arenaName;
-    List<ItemBase> battleItem;
+    List<ItemBase> battleItems;
 
     static class ItemBase {
         String mmName;

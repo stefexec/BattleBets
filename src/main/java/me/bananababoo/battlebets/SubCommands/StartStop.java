@@ -8,7 +8,6 @@ import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.TeamM;
-import me.bananababoo.battlebets.Utils.ItemUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
@@ -79,7 +78,7 @@ public class StartStop {
         Lives.resetLives(blueArena);
         redSpawn = red.getLocation();
         blueSpawn = blue.getLocation();
-        ItemUtil.start();
+        Items.start();
 
 
         HashMap<Integer, IntIntPair> coordsList = new HashMap<>();

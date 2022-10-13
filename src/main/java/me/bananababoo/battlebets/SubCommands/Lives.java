@@ -3,17 +3,13 @@ package me.bananababoo.battlebets.SubCommands;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.TeamM;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
-
-import java.util.HashMap;
 
 public class Lives {
-    public static int redLives;
+    public static int redLives = 0;
     public static int blueLives;
-    //public static HashMap<Player, Integer> livesList= new HashMap<>();
 
     public static void Init(Arena red, Arena blue){
         initLives(red);
