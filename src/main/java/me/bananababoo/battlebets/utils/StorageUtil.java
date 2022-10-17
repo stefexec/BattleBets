@@ -156,7 +156,7 @@ public static void setArena(Arena arena){
         Bukkit.getLogger().info("0");
         Gson gson = new Gson();
         File arenas = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
-        File items = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
+        File items = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ITEMSPATH);
         arenas.getParentFile().mkdir();
         try(Writer arenaWriter = new FileWriter(arenas, false)){
             gson.toJson(arenaList, arenaWriter);

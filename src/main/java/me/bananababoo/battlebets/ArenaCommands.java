@@ -15,6 +15,12 @@ public class ArenaCommands {
         StorageUtil.addArena(arenaName, "blue");
 
     }
+
+    public static void addItem(String itemName) {
+        StorageUtil.addArena(itemName, "red");
+        StorageUtil.addArena(itemName, "blue");
+
+    }
     public static void setSpawnPosition(Arena arena, String type, Location l){
         if(type.equals("spawn")) {
             arena.setLocation(l);
