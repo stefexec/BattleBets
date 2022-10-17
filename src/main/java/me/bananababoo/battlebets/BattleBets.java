@@ -6,7 +6,7 @@ import me.bananababoo.battlebets.Events.OnDeath;
 import me.bananababoo.battlebets.Events.OnJoin;
 import me.bananababoo.battlebets.Events.OnMove;
 import me.bananababoo.battlebets.SubCommands.StartStop;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import me.bananababoo.battlebets.tabComplete.BattleTabComplete;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
@@ -21,11 +21,7 @@ public final class BattleBets extends JavaPlugin {
 
     static BattleBets plugin;
     static CMI cmi;
-    public static LuckPerms LPapi;
-    public static LuckPerms getLuckPerms(){
-        return LPapi;
-    }
-    public static CMI getCMi(){return cmi;}
+    static LuckPerms lPapi;
 
     @Override
     public void onEnable() {
@@ -42,21 +38,19 @@ public final class BattleBets extends JavaPlugin {
 
 
         // ##################################################################
-
-        StorageUtil.storeBattleItem(new BattleItem(Bukkit.getServer().getWorld("battlebets").getBlockAt(-13,65,-389).getLocation().toCenterLocation(), "test",30));
+        StorageUtil.LoadFiles();
+        StorageUtil.storeBattleItem(new BattleItem(Bukkit.getServer().getWorld("battlebets").getBlockAt(-7,86,-15).getLocation().toCenterLocation(), "test",30), "sonic");
 
         RegisteredServiceProvider<LuckPerms> lpprovider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+
         if (lpprovider != null) {
-            LPapi = lpprovider.getProvider();
+            lPapi = lpprovider.getProvider();
+        } else {
+            Bukkit.getLogger().warning("LuckPerms not detecded");
         }
-        else{
-            Bukkit.getLogger().warning("CMI not detecded");
-        }
+
         StartStop.resetDeathLists();
-        RegisteredServiceProvider<CMI> cmiprovider = Bukkit.getServicesManager().getRegistration(CMI.class);
-        if (cmiprovider != null) {
-            cmi = cmiprovider.getProvider();
-        }
+        updateCMI();
         //register
         Objects.requireNonNull(this.getCommand("battle")).setExecutor(new Battle());
         Objects.requireNonNull(this.getCommand("battle")).setTabCompleter(new BattleTabComplete());
@@ -66,8 +60,13 @@ public final class BattleBets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnMove(), this);
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
 
+    }
 
-
+    public static void updateCMI(){
+        RegisteredServiceProvider<CMI> cmiprovider = Bukkit.getServicesManager().getRegistration(CMI.class);
+        if (cmiprovider != null) {
+            cmi = cmiprovider.getProvider();
+        }
     }
 
     @Override

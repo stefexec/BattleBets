@@ -4,7 +4,7 @@ import me.bananababoo.battlebets.SubCommands.Kits;
 import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.Team.BBPlayer;
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.ChatColor;
@@ -25,13 +25,13 @@ public class Battle implements CommandExecutor {
             switch (args.length){
                 case 1:
                     if(args[0].equals("stop")){
-                        StartStop.stop("Noone Won");
+                        StartStop.stop("No one Won");
                     }break;
                 case 2:
                     if(args[0].equals("start") && StorageUtil.getArenas().contains(args[1])){
                         StartStop.start(StorageUtil.getArena(args[1], "red"), StorageUtil.getArena(args[1], "blue"));
                     } else if (args[0].equals("mode")) {
-                        if (args[1].equals("lives")) {            //TODO    AUTOCOMPLETE      ACTUAL CODE FOR SWITCHING BETWEEN THE TWO INTEGRATE WITH ARENA CLASS
+                        if (args[1].equals("lives")) {
                             StartStop.setMode("lives");
                             p.sendMessage(text("Mode set to lives", NamedTextColor.GREEN));
                         } else if (args[1].equals("rebirth")) {
@@ -43,7 +43,7 @@ public class Battle implements CommandExecutor {
                 case 3:
                     if(args[0].equals("arena")){
                         if(args[1].equals("add")){
-                            ArenaCommands.addArena(p, args[2]);
+                            ArenaCommands.addArena(args[2]);
                             p.sendMessage(mm.deserialize("<gradient:dark_green:blue>Arena " + args[2]  +" Created</gradient>"));
                         }
                     }break;

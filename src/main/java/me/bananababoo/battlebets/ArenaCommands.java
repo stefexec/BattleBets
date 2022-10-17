@@ -1,13 +1,16 @@
 package me.bananababoo.battlebets;
 
-import me.bananababoo.battlebets.Utils.StorageUtil;
+import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class ArenaCommands {
+    private ArenaCommands() {
+        throw new IllegalStateException("Utility class");
+    }
 
-    public static void addArena(Player p, String arenaName) {
+    public static void addArena(String arenaName) {
         StorageUtil.addArena(arenaName, "red");
         StorageUtil.addArena(arenaName, "blue");
 
