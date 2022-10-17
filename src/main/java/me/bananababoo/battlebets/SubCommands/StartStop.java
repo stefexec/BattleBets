@@ -285,7 +285,7 @@ public class StartStop {
         resetDeathLists();
         for(Player p : Bukkit.getOnlinePlayers()){
             p.getInventory().clear();
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " 0 150 0");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spawnpoint " + p.getName() + " 0 150 0 -90");
             //p.setHealth(0);    todo check if this needs to exist
             Location location = new Location(p.getWorld(),0,150,0);
             p.teleport(location);

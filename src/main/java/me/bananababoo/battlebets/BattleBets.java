@@ -33,7 +33,7 @@ public final class BattleBets extends JavaPlugin {
         // TODO Fix spawning in wrong direction by saving of type Location instead of ints: x y z
 
         getLogger().info("#############################");
-        getLogger().info("BattleBets 1.3.2 started!");
+        getLogger().info("BattleBets 2.0.1 started!");
         getLogger().info("#############################");
 
 

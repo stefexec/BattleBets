@@ -20,12 +20,6 @@ public class Kits {
 
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + p.getName());
 
-                // give MM items
-//                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-//                for (String redItem : redItems) {
-//                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItem);
-//                }
-                
                 // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 2));
             }
@@ -35,12 +29,6 @@ public class Kits {
 
                 // give armour with cmi bc its easy
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + p.getName());
-
-
-//                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-//                for (String redItem : redItems) {
-//                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + p.getName() + " " + redItem);
-//                }
 
                 // spawn particles
                 p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(0, 0, 255), 2));
@@ -59,12 +47,6 @@ public class Kits {
             pl.getInventory().clear();
 
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + pl.getName());
-//
-//            // give MM items
-//            List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-//            for (String redItem : redItems) {
-//                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + pl.getName() + " " + redItem);
-//            }
 
             // spawn particles
             pl.getWorld().spawnParticle(Particle.REDSTONE, pl.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(255, 0, 0), 2));
@@ -75,11 +57,6 @@ public class Kits {
 
             // give armour with cmi bc its easy
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + pl.getName());
-//
-//            List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
-//            for (String redItem : redItems) {
-//                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mm items give " + pl.getName() + " " + redItem);
-//            }
 
             // spawn particles
             pl.getWorld().spawnParticle(Particle.REDSTONE, pl.getLocation(), 25, 1, 2, 1, new Particle.DustOptions(org.bukkit.Color.fromRGB(0, 0, 255), 2));
