@@ -7,6 +7,7 @@ import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.utils.StorageUtil;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static net.kyori.adventure.text.Component.text;
+import static org.bukkit.Bukkit.getLogger;
 
 public class Battle implements CommandExecutor {
 
@@ -38,7 +40,7 @@ public class Battle implements CommandExecutor {
                             StartStop.setMode("rebirth");
                             p.sendMessage(text("Mode set to rebirth", NamedTextColor.GREEN));
                         }
-                        // TODO CHECK IF PLAYER IS WITHEN 1 BLOCK OF A SPAWN AND SET THAT TEAMS SPAWN TO IT
+                        // TODO CHECK IF PLAYER IS WITHIN 1 BLOCK OF A SPAWN AND SET THAT TEAMS SPAWN TO IT
                     }break;
                 case 3:
                     if(args[0].equals("arena")){
@@ -52,7 +54,7 @@ public class Battle implements CommandExecutor {
                         if(args[3].equals("both")){
                             BBPlayer.setTeam(p, args[2], "red");
                             BBPlayer.setTeam(p, args[2], "blue");
-                            p.sendMessage(text("Player set to both teams altho idk why you would want to do that lmao", NamedTextColor.GREEN));
+                            p.sendMessage(text("Player set to both teams although idk why you would want to do that lmao", NamedTextColor.GREEN));
                         }else {
                             BBPlayer.setTeam(p, args[2], args[3]);
                             p.sendMessage(text("Player set to " + args[3] + " team", NamedTextColor.GREEN));
@@ -61,7 +63,21 @@ public class Battle implements CommandExecutor {
                         StartStop.addAllPlayersToTeam();
                     }
                     break;
-                case 5: {
+                case 5:
+                    if(args[0].equals("item")) {
+                        if(args[1].equals("add")){
+
+                            StorageUtil.LoadFiles();
+                            StorageUtil.storeBattleItem(new BattleItem(p.getLocation().toCenterLocation(), args[2],30), args[3]); // /battle item add <name> 30 <areananame>
+                            Bukkit.getLogger().info("WHY WONT THIS MOTHERFUCKER DO ANYTHING????");
+
+                        }
+                    }else if(args[1].equals("remove")) {
+
+                        Bukkit.getLogger().info("FUCK");
+                    }
+                    break;
+                case 6: {
                     if(args[4].equals("spawn") || args[4].equals("deathspawn")){
                         if(StorageUtil.getArenas().contains(args[2])){
                             Arena a = StorageUtil.getArena(args[2],args[3]);
@@ -76,7 +92,7 @@ public class Battle implements CommandExecutor {
                         }
                     }break;
                 }
-                case 6:
+                case 7:
                     if(args[0].equals("arena")){
                         if(args[1].equals("set")){
                             if(StorageUtil.getArenas().contains(args[2])){
@@ -107,6 +123,8 @@ public class Battle implements CommandExecutor {
                                 } else  p.sendMessage(ChatColor.RED + "Invalid Team name");
                             } else p.sendMessage(ChatColor.RED + "Invalid Arena name + " + StorageUtil.getArenas());
                         }
+
+
             }break;
 
 
