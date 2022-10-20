@@ -9,3 +9,6 @@ commands:
   Battle:
     description: Battlebets commands
     usage: <command>
+  BattleItem:
+    description: Battlebets item commands
+    usage: <command>

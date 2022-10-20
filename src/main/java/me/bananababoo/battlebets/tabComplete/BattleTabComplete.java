@@ -21,7 +21,7 @@ public class BattleTabComplete implements TabCompleter {
 
     private static final List<String> COMMANDS = List.of(new String[]{"arena", "team", "start", "stop", "mode"});
 
-    static List<String> completions = new ArrayList<>();
+    protected static List<String> completions = new ArrayList<>();
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -37,6 +37,7 @@ public class BattleTabComplete implements TabCompleter {
                 case "team" -> CPM(args[1], List.of("setplayer"));
                 case "start" -> CPM(args[1], StorageUtil.getArenas());
                 case "mode" -> CPM(args[1], List.of("rebirth", "lives"));
+                default -> { return List.of(); }
             }
         } else if (args.length == 3) {
             if(args[0].equals("arena")){
@@ -63,7 +64,7 @@ public class BattleTabComplete implements TabCompleter {
             else if(args[1].equals("set")) CPM(args[3], List.of("red", "blue","both"));
 
         } else if (args.length == 5) {
-            CPM(args[4], List.of("lives", "kit", "mode", "spawn", "deathspawn"));                  //TODO add ~ ~ ~ position support
+            CPM(args[4], List.of("lives", "kit", "spawn", "deathspawn"));
         } else if (args.length == 6){
             if(args[4].equals("kits")){
                 CPM(args[5], CMI.getInstance().getKitsManager().getKitMap().keySet().stream().toList());  // maybe this magic will work but who knows :D

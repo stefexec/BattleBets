@@ -1,10 +1,10 @@
 package me.bananababoo.battlebets;
 
 import com.Zrips.CMI.CMI;
-import me.bananababoo.battlebets.Events.OnDamage;
-import me.bananababoo.battlebets.Events.OnDeath;
-import me.bananababoo.battlebets.Events.OnJoin;
-import me.bananababoo.battlebets.Events.OnMove;
+import me.bananababoo.battlebets.events.OnDamage;
+import me.bananababoo.battlebets.events.OnDeath;
+import me.bananababoo.battlebets.events.OnJoin;
+import me.bananababoo.battlebets.events.OnMove;
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import me.bananababoo.battlebets.utils.StorageUtil;
 import me.bananababoo.battlebets.tabComplete.BattleTabComplete;
@@ -39,7 +39,6 @@ public final class BattleBets extends JavaPlugin {
 
         // ##################################################################
         StorageUtil.LoadFiles();
-        StorageUtil.storeBattleItem(new BattleItem(Bukkit.getServer().getWorld("battlebets").getBlockAt(-7,86,-15).getLocation().toCenterLocation(), "test",30), "sonic");
 
         RegisteredServiceProvider<LuckPerms> lpprovider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 
@@ -54,6 +53,8 @@ public final class BattleBets extends JavaPlugin {
         //register
         Objects.requireNonNull(this.getCommand("battle")).setExecutor(new Battle());
         Objects.requireNonNull(this.getCommand("battle")).setTabCompleter(new BattleTabComplete());
+        Objects.requireNonNull(this.getCommand("battleitem")).setExecutor(new ItemCommand());
+        Objects.requireNonNull(this.getCommand("battleitem")).setTabCompleter(new ItemCommandTabCompletion());
 
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
         getServer().getPluginManager().registerEvents(new OnDeath(), this);

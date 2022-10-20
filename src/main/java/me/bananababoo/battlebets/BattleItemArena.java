@@ -16,6 +16,13 @@ public class BattleItemArena {
         this.battleItems.add(battleItem);
     }
 
+    public void removeBattleItem(String battleItemName) {
+        battleItems.forEach(battleItem -> {
+            if (battleItem.getItemName().equals(battleItemName)) {
+                battleItems.remove(battleItem);
+            }
+        });
+    }
     public String getArena() {
         return name;
     }

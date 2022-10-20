@@ -58,19 +58,19 @@ public static void setArena(Arena arena){
     public static void LoadFiles() {
         try{
             Gson gson = new Gson();
-            File file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
-            try(Reader reader = Files.newBufferedReader(file.toPath())) {
+            File arenafile = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
+            try(Reader reader = Files.newBufferedReader(arenafile.toPath())) {
                 Type typeOf = new TypeToken<List<Arena>>() {
                 }.getType();
                 arenaList = gson.fromJson(reader, typeOf);
                 Bukkit.getLogger().log(Level.INFO,"Arena File loaded :{0}", arenaList);
             }
-            file = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ITEMSPATH);
-            try(Reader reader = Files.newBufferedReader(file.toPath())) {
+            File itemfile = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ITEMSPATH);
+            try(Reader reader = Files.newBufferedReader(itemfile.toPath())) {
                 Type typeOf = new TypeToken<HashSet<BattleItemArena>>() {
                 }.getType();
                 itemList = gson.fromJson(reader, typeOf);
-                Bukkit.getLogger().log(Level.INFO,"Items File loaded :{0}", arenaList);
+                Bukkit.getLogger().log(Level.INFO,"Items File loaded :{0}", itemList);
             }
         }catch(Exception e){
             Extra.warn(e);
@@ -107,6 +107,18 @@ public static void setArena(Arena arena){
             }
         }
         itemList.add(new BattleItemArena(arenaName, List.of(item)));
+        saveFile();
+    }
+    public static void removeBattleItem(String itemName, String arenaName){
+        for(BattleItemArena i : itemList){
+            if(i.getArena().equals(arenaName)){
+                itemList.remove(i);
+                i.removeBattleItem(itemName);
+                itemList.add(i);
+                saveFile();
+                return;
+            }
+        }
         saveFile();
     }
 
@@ -156,13 +168,25 @@ public static void setArena(Arena arena){
         Bukkit.getLogger().info("0");
         Gson gson = new Gson();
         File arenas = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
-        File items = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ARENAPATH);
+        File items = new File(BattleBets.getPlugin().getDataFolder().getAbsoluteFile() + ITEMSPATH);
         arenas.getParentFile().mkdir();
+        try {
+            if (arenas.createNewFile()) {
+                Bukkit.getLogger().info("Blank Arena File Created");
+            }
+            if (items.createNewFile()) {
+                Bukkit.getLogger().info("Blank Items File Created");
+            }
+        } catch (IOException e) {
+            Extra.warn(e);
+        }
+
         try(Writer arenaWriter = new FileWriter(arenas, false)){
             gson.toJson(arenaList, arenaWriter);
             arenaWriter.flush();
             Bukkit.getLogger().info("Arena's Saved");
         }catch (IOException e){
+            Extra.warn(e);
         }
         try(Writer itemWriter = new FileWriter(items, false)){
             gson.toJson(itemList, itemWriter);

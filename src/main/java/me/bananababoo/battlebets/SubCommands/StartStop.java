@@ -4,7 +4,7 @@ package me.bananababoo.battlebets.SubCommands;
 import it.unimi.dsi.fastutil.ints.IntIntPair;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.BattleBets;
-import me.bananababoo.battlebets.Events.OnDeath;
+import me.bananababoo.battlebets.events.OnDeath;
 import me.bananababoo.battlebets.Scoreboard;
 import me.bananababoo.battlebets.Team.BBPlayer;
 import me.bananababoo.battlebets.TeamM;

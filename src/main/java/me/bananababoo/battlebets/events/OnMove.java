@@ -1,4 +1,4 @@
-package me.bananababoo.battlebets.Events;
+package me.bananababoo.battlebets.events;
 
 import me.bananababoo.battlebets.SubCommands.StartStop;
 import org.bukkit.event.EventHandler;

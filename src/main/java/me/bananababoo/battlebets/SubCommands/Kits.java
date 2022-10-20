@@ -1,5 +1,7 @@
 package me.bananababoo.battlebets.SubCommands;
 
+import com.Zrips.CMI.CMI;
+import com.Zrips.CMI.Modules.Kits.Kit;
 import me.bananababoo.battlebets.Arena;
 import me.bananababoo.battlebets.TeamM;
 import me.bananababoo.battlebets.utils.StorageUtil;
@@ -9,6 +11,7 @@ import org.bukkit.entity.Player;
 
 public class Kits {
     public static void giveKit(String redKit, String blueKit) {
+        CMI cmi = CMI.getInstance();
         if(redKit == null || blueKit == null){
             Bukkit.getLogger().warning("no kit provided");
             return;
@@ -18,7 +21,9 @@ public class Kits {
 
                 p.getInventory().clear();
 
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + p.getName());
+                //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + redKit + " " + p.getName());
+                CMI.getInstance().getKitsManager().giveKit(p, cmi.getKitsManager().getKitMap().get(redKit));
+
 
                 // give MM items
 //                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");
@@ -34,7 +39,8 @@ public class Kits {
                 p.getInventory().clear();
 
                 // give armour with cmi bc its easy
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + p.getName());
+//                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "cmi kit " + blueKit + " " + p.getName());
+                CMI.getInstance().getKitsManager().giveKit(p, cmi.getKitsManager().getKitMap().get(blueKit));
 
 
 //                List<String> redItems = Arrays.asList("SkeletonKingSword", "KingsCrown");

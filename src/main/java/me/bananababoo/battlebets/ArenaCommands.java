@@ -3,7 +3,8 @@ package me.bananababoo.battlebets;
 import me.bananababoo.battlebets.utils.StorageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 public class ArenaCommands {
     private ArenaCommands() {
@@ -19,7 +20,7 @@ public class ArenaCommands {
         if(type.equals("spawn")) {
             arena.setLocation(l);
             StorageUtil.setArena(arena);
-            Bukkit.getLogger().info("tried to set spawn of" + arena);
+            Bukkit.getLogger().log(Level.INFO, "tried to set spawn of {0}", arena);
         } else if (type.equals("deathspawn")){
             arena.setDeathX(l.getBlockX());
             arena.setDeathY(l.getBlockY());
