@@ -1,5 +1,8 @@
 package me.bananababoo.battlebets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import it.unimi.dsi.fastutil.BigArrays;
 import me.bananababoo.battlebets.SubCommands.Kits;
 import me.bananababoo.battlebets.SubCommands.Lives;
 import me.bananababoo.battlebets.SubCommands.StartStop;
@@ -15,12 +18,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+
 import static net.kyori.adventure.text.Component.text;
 import static org.bukkit.Bukkit.getLogger;
 
 public class Battle implements CommandExecutor {
 
     MiniMessage mm =  MiniMessage.miniMessage();
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player p) {
@@ -63,21 +68,7 @@ public class Battle implements CommandExecutor {
                         StartStop.addAllPlayersToTeam();
                     }
                     break;
-                case 5:
-                    if(args[0].equals("item")) {
-                        if(args[1].equals("add")){
-
-                            StorageUtil.LoadFiles();
-                            StorageUtil.storeBattleItem(new BattleItem(p.getLocation().toCenterLocation(), args[2],30), args[3]); // /battle item add <name> 30 <areananame>
-                            Bukkit.getLogger().info("WHY WONT THIS MOTHERFUCKER DO ANYTHING????");
-
-                        }
-                    }else if(args[1].equals("remove")) {
-
-                        Bukkit.getLogger().info("FUCK");
-                    }
-                    break;
-                case 6: {
+                case 5: {
                     if(args[4].equals("spawn") || args[4].equals("deathspawn")){
                         if(StorageUtil.getArenas().contains(args[2])){
                             Arena a = StorageUtil.getArena(args[2],args[3]);
@@ -92,7 +83,7 @@ public class Battle implements CommandExecutor {
                         }
                     }break;
                 }
-                case 7:
+                case 6:
                     if(args[0].equals("arena")){
                         if(args[1].equals("set")){
                             if(StorageUtil.getArenas().contains(args[2])){
@@ -123,9 +114,8 @@ public class Battle implements CommandExecutor {
                                 } else  p.sendMessage(ChatColor.RED + "Invalid Team name");
                             } else p.sendMessage(ChatColor.RED + "Invalid Arena name + " + StorageUtil.getArenas());
                         }
-
-
             }break;
+
 
 
 
